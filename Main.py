@@ -6,7 +6,7 @@ from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
 for itemDeclaration in definition.items:
     item_type = type(itemDeclaration).__name__
     if item_type == "InstanceList": 
-        if instance.module == sky130_fd_sc_hd__dfrtn or instance.module == sky130_fd_sc_hd__dfrbp or instance.module == sky130_fd_sc_hd__dfrtp
+        if instance.module == sky130_fd_sc_hd__dfrtn or instance.module == sky130_fd_sc_hd__dfrbp or instance.module == sky130_fd_sc_hd__dfrtp or instance.module == sky130_fd_sc_hd__dfxtp 
         
 
 statements = []
