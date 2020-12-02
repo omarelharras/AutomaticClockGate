@@ -1,9 +1,9 @@
 import pyverilog.vparser.ast as vast
 from pyverilog.vparser.parser import parse
 from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
-
-FlipFlopList = [sky130_fd_sc_hd__dfrtn, sky130_fd_sc_hd__dfrbp, sky130_fd_sc_hd__dfrtp,sky130_fd_sc_hd__dfxtp]
-MuxList = [sky130_fd_sc_hd__mux2, sky130_fd_sc_hd__mux2i, sky130_fd_sc_hd__mux4]
+import sys
+FlipFlopList = ["sky130_fd_sc_hd__dfrtn", "sky130_fd_sc_hd__dfrbp", "sky130_fd_sc_hd__dfrtp","sky130_fd_sc_hd__dfxtp"]
+MuxList = ["sky130_fd_sc_hd__mux2", "sky130_fd_sc_hd__mux2i", "sky130_fd_sc_hd__mux4"]
 NewItemList = []
 WireList = []
 MuxInstanceList = []
@@ -29,7 +29,7 @@ for itemDeclaration in definition.items:
 for itemDeclaration in definition.items:
     item_type = type(itemDeclaration).__name__
     if item_type == "InstanceList":
-    if instance.module in MuxList:
+    	if instance.module in MuxList:
             for hook in instance.portlist:
                 if hook.argname in WireList:
                     MuxInstanceList.append(instance.name)
@@ -42,11 +42,7 @@ for itemDeclaration in definition.items:
             NewItemList.append(instance)
 
 
-
-
-
-clock_gate_args = 
-[
+clock_gate_args = [
     vast.PortArg("EN", vast.Identifier("__clock_gate_enable_")),
     vast.PortArg("INV_CLK", vast.Identifier("__clock_gate_input_a_")),
     vast.PortArg("Y", vast.Identifier("__clock_gate_output_c_"))
@@ -60,11 +56,25 @@ clock_gate_cell = vast.Instance
     tuple()
 )
 
-instances.append(vast.InstanceList("sky130_fd_sc_hd__dlclkp", tuple(), tuple([clock_gate_cell])))
-
 for itemDeclaration in definition.items:
     item_type = type(itemDeclaration).__name__
     if item_type == "InstanceList": 
         if instance.module in FlipFlopList:
             if hook.portname == "En":
                 hook.argname = "__clock_gate_output_c_"
+
+instances.append(vast.InstanceList("sky130_fd_sc_hd__dlclkp", tuple(), tuple([clock_gate_cell])))
+
+#Add the instances list to the AST items
+items = list(definition.items)
+items = items + instances + statements
+
+definition.items = tuple(items)
+
+# write the ast to a .v file
+codegen = ASTCodeGenerator()
+rslt = codegen.visit(ast)
+
+f = open("Out.v", "w")
+f.write(rslt)
+f.close()
