@@ -1,5 +1,5 @@
 # AutomaticClockGate
-Digital Design Project 2:
+# Digital Design Project 2:
 
 Team Members:
 Omar El Harras
