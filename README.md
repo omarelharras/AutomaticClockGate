@@ -1,7 +1,7 @@
 # AutomaticClockGate
 # Digital Design Project 2:
 
-# Team Members:
+Team Members:
 Omar El Harras
 Donia Abdelaziz
 Hoda Ahmed
