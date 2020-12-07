@@ -16,6 +16,6 @@ Open a terminal where the script and the gate level netlist files and type in py
 
 
 Progress so far:
-We have written the code to do all the required steps except the part that instantiates the required number of clock gating cells. We tried to run the code however it gave us an error saying that it couldn’t find the iverilog directory, despite it being downloaded.
+The code we have written will work if we there is only 1 register and for the sky 130 fd sc hd pdk.
 
 How to evaluate power usage reduction:
