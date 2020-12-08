@@ -2,9 +2,9 @@
 # AutomaticClockGate
 
 Team Members:
-Omar El Harras - 900171100
-Donia Abdelaziz - 900150232
-Hoda Ahmed - 900150182
+Omar El Harras - 900171100;
+Donia Abdelaziz - 900150232;
+Hoda Ahmed - 900150812;
 
 Our approach:
 We get the names of the MUX cells, flip flop cells, and clock gating cell from the user of the pdk that the user wants to use. We get the file name from the user then we loop over all the items with the type instance list looking for any flip flops, and we create a list of the names of the wires that enter the D port of the flip flop. Then we loop over the instance list again and look for any multiplexers whose output goes to the flip flops and we add them to a list. Then we loop over the instance list again, and we create a new instances list that has all the elements of the original instance list except the multiplexers that are connected to the flip flops. After that we will create a clock gating cell instance for each flip flop and connect the enable of the flip flop to the clock gating cell.
