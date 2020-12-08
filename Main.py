@@ -3,8 +3,8 @@ from pyverilog.vparser.parser import parse
 from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
 import sys
 
-BaseFlipFlopList = ["sky130_fd_sc_hd__dfrtn", "sky130_fd_sc_hd__dfrbp", "sky130_fd_sc_hd__dfrtp","sky130_fd_sc_hd__dfxtp"] #base flip flop types
-BaseMuxList = ["sky130_fd_sc_hd__mux2", "sky130_fd_sc_hd__mux2i", "sky130_fd_sc_hd__mux4"] #base mux types
+#BaseFlipFlopList = ["sky130_fd_sc_hd__dfrtn", "sky130_fd_sc_hd__dfrbp", "sky130_fd_sc_hd__dfrtp","sky130_fd_sc_hd__dfxtp"] #base flip flop types
+#BaseMuxList = ["sky130_fd_sc_hd__mux2", "sky130_fd_sc_hd__mux2i", "sky130_fd_sc_hd__mux4"] #base mux types
 NewItemList = [] #list of items in new gate level netlist
 WireList = [] #list of wires that connect MUXs to flip flops
 MuxInstanceList = [] #list of MUX instances to remove
@@ -20,6 +20,16 @@ ast, _ = parse([rtl])
 desc = ast.description
 # get the ModuleDef node
 definition = desc.definitions[0]
+TestList = []
+
+input_string=input("Please enter the flip flop cell names for your pdk without their sizes and seperated by spaces: \n")
+BaseFlipFlopList= input_string.split()   
+
+input_string=input("Please enter the MUX cell names for your pdk without their sizes and seperated by spaces: \n")
+BaseMuxList= input_string.split()
+
+ClockGateCellName=input("Please enter the clock gate cell name for your pdk: \n")
+
 
 #generate flip flop list of different sizes
 for item in BaseFlipFlopList:
@@ -126,13 +136,15 @@ clock_gate_args = [
 ]
 
 clock_gate_cell = vast.Instance(
-    "sky130_fd_sc_hd__dlclkp",
+    ClockGateCellName,
     "__clock_gate_cell__",
     tuple(clock_gate_args),
     tuple()
 )
 
-NewItemList.append(vast.InstanceList("sky130_fd_sc_hd__dlclkp", tuple(), tuple([clock_gate_cell])))
+NewItemList.append(vast.Wire("__clock_gate_output_c_", None, None, None))
+NewItemList.append(vast.InstanceList(ClockGateCellName, tuple(), tuple([clock_gate_cell])))
+
 
 
 #Add the instances list to the AST items
