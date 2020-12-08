@@ -3,8 +3,6 @@ from pyverilog.vparser.parser import parse
 from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
 import sys
 
-BaseFlipFlopList = ["sky130_fd_sc_hd__dfrtn", "sky130_fd_sc_hd__dfrbp", "sky130_fd_sc_hd__dfrtp","sky130_fd_sc_hd__dfxtp"] #base flip flop types
-BaseMuxList = ["sky130_fd_sc_hd__mux2", "sky130_fd_sc_hd__mux2i", "sky130_fd_sc_hd__mux4"] #base mux types
 NewItemList = [] #list of items in new gate level netlist
 WireList = [] #list of wires that connect MUXs to flip flops
 MuxInstanceList = [] #list of MUX instances to remove
