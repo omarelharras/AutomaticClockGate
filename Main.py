@@ -8,7 +8,6 @@ WireList = [] #list of wires that connect MUXs to flip flops
 MuxInstanceList = [] #list of MUX instances to remove
 FlipFlopList=[] #flip flop types including different sizes
 MuxList=[] #mux types including different sizes
-TestList=[]
 MuxIn = 0 #mux input (D)
 CLK = 0 #flip flop clock
 EN = 0 #mux enable
@@ -19,7 +18,6 @@ ast, _ = parse([rtl])
 desc = ast.description
 # get the ModuleDef node
 definition = desc.definitions[0]
-TestList = []
 
 input_string=input("Please enter the flip flop cell names for your pdk without their sizes and seperated by spaces: \n")
 BaseFlipFlopList= input_string.split()   
